@@ -208,13 +208,11 @@ body {
 }
 
 #finish-game-btn {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
+    margin-top: 10px;
     padding: 10px 20px;
     font-size: 1em;
     cursor: pointer;
-    background-color: #4CAF50;
+    background-color: #808080;
     color: white;
     border: none;
     border-radius: 5px;
@@ -223,7 +221,7 @@ body {
 }
 
 #finish-game-btn:hover {
-    background-color: #45a049;
+    background-color: #666666;
 }
 
 .flash-correct {
