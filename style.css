@@ -1,0 +1,180 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f0f0f0;
+    margin: 0;
+}
+
+.game-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    max-width: 1400px; /* Increased max-width for more space */
+    width: 95%;
+    height: 90vh; /* Set a fixed height for the container */
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.map-container {
+    flex-basis: 70%; /* Map takes up 70% of the container width */
+    height: 100%;
+}
+
+#us-map {
+    width: 100%;
+    height: 100%;
+}
+
+.state-outline {
+    fill: #ccc;
+    stroke: #666;
+    stroke-width: 1.5;
+    transition: fill 0.3s ease;
+}
+
+.state-outline:hover {
+    fill: #ddd;
+}
+
+.states-list {
+    flex-basis: 30%; /* List takes up 30% of the container width */
+    height: 100%; /* Ensure the list is the same height as the map container */
+    overflow-y: hidden; /* Prevent scrolling */
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    box-sizing: border-box; /* Include padding in the element's total width and height */
+}
+
+#state-names {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap; /* Allow items to wrap into multiple columns */
+    height: 100%; /* Allow list items to fill the available height */
+    align-content: flex-start; /* Align columns to the left */
+}
+
+.state-name {
+    background: #f4f4f4;
+    padding: 8px; /* Reduced padding to fit more names */
+    margin: 3px 5px; /* Reduced margin to fit more names */
+    cursor: grab;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 0.9em; /* Slightly smaller font size */
+    flex-grow: 0;
+    flex-shrink: 0;
+    width: 100px; /* Fixed width to control column size */
+    box-sizing: border-box;
+}
+
+.state-name.correct {
+    display: none; /* Hide the name after it's been placed correctly */
+}
+
+/* Correct drop styling */
+.correct-state {
+    fill: green;
+}
+
+/* Incorrect drop styling */
+.incorrect-state {
+    fill: red;
+}
+
+#message-container {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    z-index: 10;
+    transition: opacity 0.5s ease-in-out;
+    opacity: 0;
+}
+
+.error-message {
+    background-color: #e74c3c;
+    opacity: 1;
+}
+
+.success-message {
+    background-color: #2ecc71;
+    opacity: 1;
+}
+
+/* Fireworks animation */
+#fireworks-container {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 20;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.congrats-text {
+    font-size: 3em;
+    text-shadow: 2px 2px 4px #000;
+}
+
+.firework {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 0 10px white, 0 0 20px white;
+    animation: firework-anim 1s forwards, fade-out 0.5s 0.8s forwards;
+}
+
+@keyframes firework-anim {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(50); opacity: 0; }
+}
+
+@keyframes fade-out {
+    100% { opacity: 0; }
+}
+/* Styles for the state names list */
+.state-name {
+    /* ... (rest of the .state-name styles) ... */
+    transition: background-color 0.3s ease; /* Add transition for a smoother color change */
+}
+
+/* New CSS for correct attempts */
+.state-name.correct-attempt {
+    background-color: #d4edda; /* Light green background */
+    border-color: #c3e6cb;
+    color: #155724; /* Dark green text */
+}
+
+/* New CSS for incorrect attempts */
+.state-name.incorrect-attempt {
+    background-color: #f8d7da; /* Light red background */
+    border-color: #f5c6cb;
+    color: #721c24; /* Dark red text */
+}
