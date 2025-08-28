@@ -12,14 +12,18 @@
         <div class="map-container">
             <svg id="us-map" viewBox="0 0 960 600"></svg>
         </div>
-        <div class="states-list">
-            <div id="score-display">Score: 0</div>
-            <ul id="state-names">
+        <div class="sidebar">
+            <div id="score-display" title="You get a point if you match the state name on the map on the first try. Top score is 50!">Score: 0 / 50</div>
+            <div class="states-list">
+                <ul id="state-names">
                 </ul>
+            </div>
         </div>
     </div>
     
     <div id="message-container"></div>
+
+    <button id="finish-game-btn">Finish Game</button>
 
     <div id="fireworks-container">
         <h1 class="congrats-text">Congrats! You finished!</h1>

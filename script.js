@@ -127,86 +127,58 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }
 
+    function placeStateCorrectly(stateName) {
+        const statePath = document.getElementById(stateName.replace(/\s/g, ''));
+        const stateNameElement = Array.from(document.querySelectorAll('li.state-name')).find(li => li.textContent === stateName);
+
+        if (statePath && stateNameElement && !statePath.classList.contains('correct-state')) {
+            const previousAttempts = attempts[stateName];
+            if (previousAttempts === 0) {
+                score++;
+                showMessage('Correct! +1 Point', 'success');
+            } else {
+                showMessage('Correct, but no point gained.', 'success');
+            }
+            attempts[stateName]++;
+            statesAttempted++;
+
+            statePath.classList.add('correct-state');
+            stateNameElement.classList.add('correct-attempt');
+            setTimeout(() => {
+                stateNameElement.remove();
+            }, 500);
+
+            updateScoreDisplay();
+
+            if (statesAttempted === totalStates) {
+                endGame();
+            }
+        }
+    }
+
     function handleDrop(e) {
         e.preventDefault();
         e.target.classList.remove('highlighted-state'); // Remove highlight on drop
         const draggedStateName = e.dataTransfer.getData('text/plain');
         const droppedTarget = e.target;
         const targetStateName = droppedTarget.getAttribute('data-state-name');
-        const draggedListItem = document.querySelector(`li.state-name[draggable]`);
-        console.log('draggedListItem: ' + draggedListItem)
-        console.log('draggedStateName: ' + draggedStateName)
-
-        // Check if the state has already been placed correctly
 
         if (droppedTarget.classList.contains('correct-state')) {
-
-        showMessage('This state is already in place!', 'error');
-
-        return;
-
+            showMessage('This state is already in place!', 'error');
+            return;
         }
-
-        const previousAttempts = attempts[targetStateName];
-        console.log('previousAttempts: ' + previousAttempts)
-        
-        // Check if this is the first correct attempt
-        if (previousAttempts === 0) {
-            attempts[targetStateName]++
-            statesAttempted++;  
-        }
-        console.log('statesAttempted: ' + statesAttempted)
 
         if (draggedStateName === targetStateName) {
-            // Correct match            
-            
-            // Check if this is the first correct attempt
-            if (previousAttempts === 0) {
-                score++;                
-                showMessage('Correct! +1 Point', 'success');
-            } else {
-                showMessage('Correct, but no point gained.', 'success');
-            }
-            
-            droppedTarget.classList.add('correct-state');
-            // document.querySelector(`li.state-name[draggable][textContent="${draggedStateName}"]`).remove();
-            // Apply green color to the list item
-
-            draggedListItem.classList.add('correct-attempt');
-
-            // Remove the list item after a short delay for the user to see the color change
-
-            setTimeout(() => {
-
-            draggedListItem.remove();
-
-            }, 500);
-
-            // correctMatches++;
-            
-            
-            updateScoreDisplay();            
-            if (statesAttempted === totalStates) {
-                endGame();
-            }
+            placeStateCorrectly(draggedStateName);
         } else {
+            const draggedListItem = Array.from(document.querySelectorAll('li.state-name')).find(li => li.textContent === draggedStateName);
             // Incorrect match
             attempts[draggedStateName] = (attempts[draggedStateName] || 0) + 1;
             
-            // Deduct a point if this is not the first attempt on this state
-            // if (attempts[draggedStateName] > 1 && score > 0) {
-            //     score--;
-            // }
-            // Apply red color to the list item
-
             draggedListItem.classList.add('incorrect-attempt');
 
-            // Reset the color after a brief moment so the user can try again
-
             setTimeout(() => {
-
-            draggedListItem.classList.remove('incorrect-attempt');
-
+                draggedListItem.classList.remove('incorrect-attempt');
             }, 1000);
 
             showMessage('Incorrect. Try again!', 'error');
@@ -220,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     function updateScoreDisplay() {
-        scoreDisplay.textContent = `Score: ${score}`;
+        scoreDisplay.textContent = `Score: ${score} / 50`;
     }
 
     function showMessage(text, type) {
@@ -265,5 +237,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     initMap();
     initStatesList();
+
+    const finishGameBtn = document.getElementById('finish-game-btn');
+
+    finishGameBtn.addEventListener('click', () => {
+        const remainingStateNames = Array.from(document.querySelectorAll('.state-name:not(.correct)'));
+        
+        remainingStateNames.forEach((stateNameElement, index) => {
+            setTimeout(() => {
+                const stateName = stateNameElement.textContent;
+                const statePath = document.getElementById(stateName.replace(/\s/g, ''));
+
+                if (statePath) {
+                    statePath.classList.add('flash-correct');
+                    stateNameElement.classList.add('flash-correct');
+
+                    setTimeout(() => {
+                        placeStateCorrectly(stateName);
+                        statePath.classList.remove('flash-correct');
+                        stateNameElement.classList.remove('flash-correct');
+                    }, 500);
+                }
+            }, index * 1000);
+        });
+    });
 });
 

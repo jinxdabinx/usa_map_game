@@ -47,19 +47,20 @@ body {
     fill: #f2c94c; /* A nice yellow color for highlighting */
 }
 
+.sidebar {
+    flex-basis: 20%; /* Sidebar takes up 20% of the container width */
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
 .states-list {
-    flex-basis: 20%; /* List takes up 20% of the container width */
-
     height: 100%; 
-
     overflow-y: auto; /* Enable vertical scrolling */
     border: 1px solid #ccc;
     padding: 10px;
     border-radius: 5px;
     box-sizing: border-box; /* Include padding in the element's total width and height */
-    display: flex;
-
-    flex-direction: column;
 }
 
 #state-names {
@@ -206,4 +207,41 @@ body {
     color: #721c24; /* Dark red text */
 }
 
+#finish-game-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    transition: background-color 0.3s;
+}
 
+#finish-game-btn:hover {
+    background-color: #45a049;
+}
+
+.flash-correct {
+    animation: flash-green 0.5s ease-out;
+}
+
+@keyframes flash-green {
+    50% {
+        fill: #2ecc71;
+    }
+}
+
+.state-name.flash-correct {
+    animation: flash-green-bg 0.5s ease-out;
+}
+
+@keyframes flash-green-bg {
+    50% {
+        background-color: #d4edda;
+    }
+}
