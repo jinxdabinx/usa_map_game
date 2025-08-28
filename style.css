@@ -12,7 +12,7 @@ body {
     display: flex;
     justify-content: center;
     gap: 20px;
-    max-width: 1400px; /* Increased max-width for more space */
+    max-width: 1600px;
     width: 95%;
     height: 90vh; /* Set a fixed height for the container */
     padding: 20px;
@@ -22,7 +22,7 @@ body {
 }
 
 .map-container {
-    flex-basis: 70%; /* Map takes up 70% of the container width */
+    flex-basis: 80%; /* Map takes up 80% of the container width */
     height: 100%;
 }
 
@@ -39,17 +39,27 @@ body {
 }
 
 .state-outline:hover {
-    fill: #ddd;
+    fill: #ccc;
+}
+
+/* New CSS for the drag-over highlight */
+.state-outline.highlighted-state {
+    fill: #f2c94c; /* A nice yellow color for highlighting */
 }
 
 .states-list {
-    flex-basis: 30%; /* List takes up 30% of the container width */
-    height: 100%; /* Ensure the list is the same height as the map container */
-    overflow-y: hidden; /* Prevent scrolling */
+    flex-basis: 20%; /* List takes up 20% of the container width */
+
+    height: 100%; 
+
+    overflow-y: auto; /* Enable vertical scrolling */
     border: 1px solid #ccc;
     padding: 10px;
     border-radius: 5px;
     box-sizing: border-box; /* Include padding in the element's total width and height */
+    display: flex;
+
+    flex-direction: column;
 }
 
 #state-names {
@@ -63,10 +73,26 @@ body {
     align-content: flex-start; /* Align columns to the left */
 }
 
+#score-display {
+
+    text-align: center;
+
+    font-weight: bold;
+
+    font-size: 1.2em;
+
+    padding-bottom: 10px;
+
+    border-bottom: 1px solid #ccc;
+
+    margin-bottom: 10px;
+
+}
+
 .state-name {
     background: #f4f4f4;
     padding: 8px; /* Reduced padding to fit more names */
-    margin: 3px 5px; /* Reduced margin to fit more names */
+    margin: 3px 0;
     cursor: grab;
     border: 1px solid #ddd;
     border-radius: 5px;
@@ -75,8 +101,9 @@ body {
     font-size: 0.9em; /* Slightly smaller font size */
     flex-grow: 0;
     flex-shrink: 0;
-    width: 100px; /* Fixed width to control column size */
+    width: 100%;
     box-sizing: border-box;
+    transition: background-color 0.3s ease;
 }
 
 .state-name.correct {
@@ -178,3 +205,5 @@ body {
     border-color: #f5c6cb;
     color: #721c24; /* Dark red text */
 }
+
+
